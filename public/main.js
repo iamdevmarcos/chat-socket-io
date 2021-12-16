@@ -13,13 +13,33 @@ chatPage.style.display = 'none';
 
 loginInput.addEventListener('keyup', (e) => {
     if(e.keyCode === 13) {
-        let name = loginInput.value.trim();
+        let name = firstLetterUp(loginInput.value.trim());
         if(name !== '') {
-            username = firstLetterUp(name);
-            document.title = `Chat ${username}`;
+            username = name;
+            document.title = `Chat (${username})`;
+
+            socket.emit('join-request', username);
         }
     }
 })
+
+socket.on('user-ok', (list) => {
+    loginPage.style.display = 'none';
+    chatPage.style.display = 'flex';
+    textInput.focus();
+
+    userList = list;
+    renderUserList();
+})
+
+function renderUserList() {
+    let ul = document.querySelector('.userList');
+    ul.innerHTML = '';
+
+    userList.forEach(i => {
+        ul.innerHTML += `<li>${i}</li>`;
+    });
+}
 
 const firstLetterUp = (string) => {
     const firstLetter = string.charAt(0).toUpperCase();
