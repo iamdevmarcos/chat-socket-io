@@ -11,6 +11,15 @@ let textInput = document.querySelector('#chatTextInput');
 loginPage.style.display = 'flex';
 chatPage.style.display = 'none';
 
+function renderUserList() {
+    let ul = document.querySelector('.userList');
+    ul.innerHTML = '';
+
+    userList.forEach(i => {
+        ul.innerHTML += `<li>${i}</li>`;
+    });
+}
+
 loginInput.addEventListener('keyup', (e) => {
     if(e.keyCode === 13) {
         let name = firstLetterUp(loginInput.value.trim());
@@ -32,14 +41,12 @@ socket.on('user-ok', (list) => {
     renderUserList();
 })
 
-function renderUserList() {
-    let ul = document.querySelector('.userList');
-    ul.innerHTML = '';
+socket.on('list-update', (data) => {
+    userList = data.list;
+    renderUserList();
+});
 
-    userList.forEach(i => {
-        ul.innerHTML += `<li>${i}</li>`;
-    });
-}
+
 
 const firstLetterUp = (string) => {
     const firstLetter = string.charAt(0).toUpperCase();
