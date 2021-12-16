@@ -4,6 +4,12 @@ body {
     box-sizing: border-box;
 }
 
+ul, li {
+    margin:0;
+    padding:0;
+    list-style: none;
+}
+
 .page {
     min-height:100vh;
     justify-content: center;
@@ -12,7 +18,7 @@ body {
 }
 
 #loginPage {
-    display: flex;
+    display: none;
     background-color: #FFF;
 }
 
@@ -28,5 +34,37 @@ body {
 }
 
 #chatPage {
-    display:none;
+    display:flex;
+}
+
+.chatArea {
+    flex:1;
+    width:100%;
+    display: flex;
+    background-color: #CCC;
+}
+
+.chatList {
+    flex:1;
+    background-color: #FFF;
+}
+
+.userList {
+    width:200px;
+    background-color: #CCC;
+}
+
+.chatInput {
+    width:100%;
+    display:flex;
+}
+
+#chatTextInput {
+    flex:1;
+    height:40px;
+    padding:0 10px;
+    font-size:15px;
+    background-color:#CCC;
+    outline: 0;
+    border:0;
 }
