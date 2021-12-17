@@ -44,6 +44,18 @@ loginInput.addEventListener('keyup', (e) => {
     }
 })
 
+textInput.addEventListener('keyup', (e) => {
+    if(e.keyCode === 13) {
+        let txt = textInput.value.trim();
+        textInput.value = '';
+
+        if(txt !== '') {
+            addMessage('msg', username, txt);
+            socket.emit('send-msg', txt);
+        }
+    }
+});
+
 socket.on('user-ok', (list) => {
     loginPage.style.display = 'none';
     chatPage.style.display = 'flex';
@@ -60,13 +72,15 @@ socket.on('list-update', (data) => {
         addMessage('status', null, `${data.joined} entered the chat.`);
     }
     if(data.left) {
-        addMessage('status', null, `${data.joined} left the chat.`);
+        addMessage('status', null, `${data.left} left the chat.`);
     }
     userList = data.list;
     renderUserList();
 });
 
-
+socket.on('show-msg', (data) => {
+    addMessage('msg', data.username, data.message);
+});
 
 const firstLetterUp = (string) => {
     const firstLetter = string.charAt(0).toUpperCase();
